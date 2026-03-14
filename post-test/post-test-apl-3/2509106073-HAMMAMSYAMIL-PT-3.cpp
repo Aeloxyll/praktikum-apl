@@ -1,7 +1,6 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <cstdlib>
 using namespace std;
 
 struct Penyewa {
@@ -20,14 +19,11 @@ struct User {
     string password;
 };
 
-// ==================== PROSEDUR ====================
 
-// Prosedur: Menampilkan header menu
 void tampilHeader(string judul) {
     cout << "\n===== " << judul << " =====\n";
 }
 
-// Prosedur: Menampilkan semua data kost
 void lihatData(Kost dataKost[], int jumlahKost) {
     tampilHeader("DATA KOST");
     if (jumlahKost == 0) {
@@ -52,20 +48,16 @@ void lihatData(Kost dataKost[], int jumlahKost) {
              << endl;
     }
 }
-// ==================== FUNGSI ====================
-// Fungsi: Mencari index kamar berdasarkan ID (REKURSIF)
 int cariKamar(Kost dataKost[], int id, int index, int jumlahKost) {
-    if (index >= jumlahKost) return -1;                    // Base case: tidak ditemukan
-    if (dataKost[index].idKamar == id) return index;       // Base case: ditemukan
-    return cariKamar(dataKost, id, index + 1, jumlahKost); // Recursive case
+    if (index >= jumlahKost) return -1;                    
+    if (dataKost[index].idKamar == id) return index;       
+    return cariKamar(dataKost, id, index + 1, jumlahKost); 
 }
-// Fungsi: Menghitung total harga semua kost (REKURSIF)
 int totalHarga(Kost dataKost[], int index, int jumlahKost) {
-    if (index >= jumlahKost) return 0;                              // Base case
-    return dataKost[index].harga + totalHarga(dataKost, index + 1, jumlahKost); // Recursive case
+    if (index >= jumlahKost) return 0;                             
+    return dataKost[index].harga + totalHarga(dataKost, index + 1, jumlahKost); 
 }
 
-// Fungsi: Register user baru
 bool registerUser(User users[], int &jumlahUser) {
     tampilHeader("REGISTER");
     if (jumlahUser >= 100) {
@@ -83,7 +75,6 @@ bool registerUser(User users[], int &jumlahUser) {
     return true;
 }
 
-// Fungsi: Login user (dengan batas percobaan)
 bool loginUser(User users[], int jumlahUser) {
     tampilHeader("LOGIN");
     string namaLogin, passwordLogin;
@@ -117,7 +108,7 @@ bool tambahData(Kost dataKost[], int &jumlahKost) {
         return false;
     }
     dataKost[jumlahKost].idKamar = jumlahKost + 1;
-    cout << "ID Kamar: " << dataKost[jumlahKost].idKamar << endl;
+    cout << "ID Kamar1: " << dataKost[jumlahKost].idKamar << endl;
     cin.ignore(1000, '\n');
     cout << "Tipe Kamar    : "; getline(cin, dataKost[jumlahKost].tipe);
     cout << "Harga         : "; cin >> dataKost[jumlahKost].harga;
@@ -129,7 +120,6 @@ bool tambahData(Kost dataKost[], int &jumlahKost) {
     return true;
 }
 
-// Fungsi: Update data kost berdasarkan ID
 bool updateData(Kost dataKost[], int jumlahKost) {
     tampilHeader("UPDATE DATA");
     int id;
@@ -154,7 +144,6 @@ bool updateData(Kost dataKost[], int jumlahKost) {
     return true;
 }
 
-// Fungsi: Hapus data kost berdasarkan ID
 bool hapusData(Kost dataKost[], int &jumlahKost) {
     tampilHeader("HAPUS DATA");
     int id;
@@ -174,15 +163,9 @@ bool hapusData(Kost dataKost[], int &jumlahKost) {
     cout << "Data berhasil dihapus!\n";
     return true;
 }
-
-// ==================== FUNCTION OVERLOADING ====================
-
-// Overload 1: Tampilkan info ringkas satu kamar (hanya idKamar & tipe)
 void tampilInfo(Kost k) {
     cout << "[Info Kamar] ID: " << k.idKamar << " | Tipe: " << k.tipe << endl;
 }
-
-// Overload 2: Tampilkan info lengkap satu kamar beserta harga
 void tampilInfo(Kost k, bool tampilHarga) {
     cout << "[Info Kamar] ID: " << k.idKamar
          << " | Tipe: " << k.tipe;
@@ -191,8 +174,6 @@ void tampilInfo(Kost k, bool tampilHarga) {
     cout << " | Penyewa: " << k.penyewa.nama
          << " | No HP: " << k.penyewa.noHP << endl;
 }
-
-// Overload 3: Tampilkan info kamar berdasarkan index dalam array
 void tampilInfo(Kost dataKost[], int index) {
     cout << "[Info Kamar ke-" << index + 1 << "] "
          << "ID: " << dataKost[index].idKamar
@@ -200,20 +181,15 @@ void tampilInfo(Kost dataKost[], int index) {
          << " | Harga: Rp" << dataKost[index].harga
          << " | Penyewa: " << dataKost[index].penyewa.nama << endl;
 }
-
-// Fungsi: Tampilkan ringkasan data (memanfaatkan overloadig & rekursi total harga)
 void tampilRingkasan(Kost dataKost[], int jumlahKost) {
     tampilHeader("RINGKASAN DATA KOST");
     cout << "Total kamar terdaftar : " << jumlahKost << endl;
     cout << "Total pendapatan      : Rp" << totalHarga(dataKost, 0, jumlahKost) << endl;
     cout << "\nDetail setiap kamar:\n";
     for (int i = 0; i < jumlahKost; i++) {
-        tampilInfo(dataKost, i); // Menggunakan overload versi 3
+        tampilInfo(dataKost, i);
     }
 }
-
-// ==================== MENU UTAMA ====================
-
 void menuUtama(Kost dataKost[], int &jumlahKost) {
     int menu;
     do {
@@ -226,7 +202,6 @@ void menuUtama(Kost dataKost[], int &jumlahKost) {
         cout << "6. Keluar\n";
         cout << "Pilihan: ";
         cin >> menu;
-
         switch (menu) {
             case 1: tambahData(dataKost, jumlahKost);         break;
             case 2: lihatData(dataKost, jumlahKost);          break;
@@ -238,16 +213,12 @@ void menuUtama(Kost dataKost[], int &jumlahKost) {
         }
     } while (menu != 6);
 }
-
-// ==================== MAIN ====================
-
 int main() {
     User users[100];
     Kost dataKost[100];
     int jumlahUser = 0;
     int jumlahKost = 0;
     int pilihanAwal;
-
     do {
         tampilHeader("MENU AWAL");
         cout << "1. Register\n";
@@ -255,7 +226,6 @@ int main() {
         cout << "3. Keluar\n";
         cout << "Pilihan: ";
         cin >> pilihanAwal;
-
         if (pilihanAwal == 1) {
             registerUser(users, jumlahUser);
         }
@@ -273,7 +243,6 @@ int main() {
             cout << "Pilihan tidak valid!\n";
         }
     } while (pilihanAwal != 3);
-
     cout << "\nProgram selesai. Terima kasih!\n";
     cout << "Tekan Enter untuk keluar...";
     cin.ignore();
