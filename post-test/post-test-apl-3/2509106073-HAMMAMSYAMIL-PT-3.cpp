@@ -150,7 +150,7 @@ bool hapusData(Kost dataKost[], int &jumlahKost) {
     cout << "Masukkan ID Kamar yang ingin dihapus: ";
     cin >> id;
 
-    int index = cariKamar(dataKost, id, 0, jumlahKost); // Menggunakan fungsi rekursif
+    int index = cariKamar(dataKost, id, 0, jumlahKost);
     if (index == -1) {
         cout << "ID Kamar tidak ditemukan!\n";
         return false;
